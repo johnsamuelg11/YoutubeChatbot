@@ -5,6 +5,12 @@ import ChatWindow from './components/ChatWindow'
 import QuestionInput from './components/QuestionInput'
 import Notification from './components/Notification'
 
+// ── Backend base URL ─────────────────────────────────
+// Uses VITE_API_URL env var if set (e.g. for local dev),
+// otherwise defaults to the production Render backend.
+const API_BASE =
+  import.meta.env.VITE_API_URL || 'https://youtubechatbot-418u.onrender.com'
+
 /**
  * Main application component — orchestrates the video processing
  * and Q&A chat flow for the AI-Powered Tutor.
@@ -38,7 +44,7 @@ export default function App() {
     setChatHistory([])
 
     try {
-      const res = await fetch('/api/process-video', {
+      const res = await fetch(`${API_BASE}/api/process-video`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: videoUrl.trim() }),
@@ -71,7 +77,7 @@ export default function App() {
     setIsAsking(true)
 
     try {
-      const res = await fetch('/api/ask-question', {
+      const res = await fetch(`${API_BASE}/api/ask-question`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q }),
