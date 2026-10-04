@@ -28,7 +28,13 @@ load_dotenv()
 
 # ── Flask setup ────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"])
+CORS(app)
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"status": "YouTube Chatbot API is running and ready!"}), 200
+
 
 # ── Global in-memory state ─────────────────────────────────────────────────────
 _vector_store: FAISS | None = None
