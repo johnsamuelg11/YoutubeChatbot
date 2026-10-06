@@ -66,7 +66,7 @@ def process_video(url: str) -> str:
     video_id = _extract_video_id(url)
 
     try:
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, cookies='cookies.txt')
+        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en', 'en-US', 'en-GB'])
     except (NoTranscriptFound, TranscriptsDisabled) as exc:
         raise RuntimeError(
             "No English transcript available for this video. "
