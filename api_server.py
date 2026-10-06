@@ -26,6 +26,9 @@ from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, Tran
 
 load_dotenv()
 
+# ── YouTube Transcript API (new OO interface) ─────────────────────────────────
+yt_api = YouTubeTranscriptApi()
+
 # ── Flask setup ────────────────────────────────────────────────────────────────
 app = Flask(__name__)
 CORS(app)
@@ -66,7 +69,7 @@ def process_video(url: str) -> str:
     video_id = _extract_video_id(url)
 
     try:
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en', 'en-US', 'en-GB'])
+        transcript_list = yt_api.fetch(video_id, languages=['en', 'en-US', 'en-GB'])
     except (NoTranscriptFound, TranscriptsDisabled) as exc:
         raise RuntimeError(
             "No English transcript available for this video. "
